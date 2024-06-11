@@ -1,10 +1,10 @@
-#Setup
+# Setup
 Place Alternate Character Select.lua into external/mods for the lua code to initalize
 
-#Required Paramaters
+# Required Paramaters
 p#.fp.main.pos = x, y ;Sets where the character the player is currently hovering over should be set, all other placements are placed around this one.
 
-#Optional Paramaters
+# Optional Paramaters
 p#.fp.scale = x,y;Sets how large the currently hovered character should be shown relative to regular size, defaults to 1,1
 
 p#.fp.down = #;Sets how many characters below the main one should be shown, defaults to 0
