@@ -249,7 +249,7 @@ function start.f_selectScreen()
 					sndPlay(motif.files.snd_data, motif.select_info['p' .. side .. '_cursor_move_snd'][1], motif.select_info['p' .. side .. '_cursor_move_snd'][2])
 				end
 			end
-			if (((start.p[side].selEnd == false) and (start.p[side].teamEnd == true)) or (motif.select_info.hideoncompleteselection == 0)) and (((start.p[1].selEnd and main.cpuSide[2]) or side == 1) or main.cpuSide[2] == false) then
+			if start.p[side].teamEnd == true and (((start.p[side].selEnd == false) and (start.p[side].teamEnd == true)) or (motif.select_info.hideoncompleteselection == 0)) and (((start.p[1].selEnd and main.cpuSide[2]) or side == 1) or main.cpuSide[2] == false) then
 				--vertical showcase
 				for n = 1, motif.select_info['p' .. side .. '_fp_up'] or 0 do
 					main.f_animPosDraw(
