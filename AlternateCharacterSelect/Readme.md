@@ -24,3 +24,7 @@ p#.fp.up.V.left = #;Sets how many characters to the left of the character V numb
 p#.fp.down.V.right = #;Sets how many characters to the right of the character V number of slots down from the main one should be shown, defaults to 0
 p#.fp.down.V.left = #;Sets how many characters to the left of the character V number of slots down from the main one should be shown, defaults to 0
 ```
+
+```
+hideoncompleteselection = (1 or 0);Whether to hide the character cells after all characters have been selected, defaults to 1
+```
