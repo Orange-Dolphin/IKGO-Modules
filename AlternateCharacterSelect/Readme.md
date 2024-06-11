@@ -11,8 +11,8 @@ p#.fp.scale = x,y;Sets how large the currently hovered character should be shown
 ```
 p#.fp.down = #;Sets how many characters below the main one should be shown, defaults to 0
 p#.fp.up = #;Sets how many characters above the main one should be shown, defaults to 0
-p#.fp.left = #;Sets how many characters to the left of the main one should be shown, defaults to 0
-p#.fp.right = #;Sets how many characters to the right of the main one should be shown, defaults to 0
+p#.fp.main.left = #;Sets how many characters to the left of the main one should be shown, defaults to 0
+p#.fp.main.right = #;Sets how many characters to the right of the main one should be shown, defaults to 0
 ```
 ```
 p#.fp.DIRECTION.spacing = x,y;Sets the space between cells in any specific direction(up, down, left, right), defaults to cell size
