@@ -1,4 +1,4 @@
-This repository is for all my module creations for the Ikemen Go project, to find the project, please follow this link 
+This repository is for all my module creations for the Ikemen Go project; to find the project, please follow this link 
 https://github.com/ikemen-engine/Ikemen-GO
 
 # Modules
