@@ -1,0 +1,1 @@
+Usage - For each section of your roster, create a separate file in the input folder. These files will be read and added to the select.def in alphabetical order. Add the included folder to the Ikemen folder and if the select.def or system.def are not in their usual locations, change config.txt to their proper locations.
