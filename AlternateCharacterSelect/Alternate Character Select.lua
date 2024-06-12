@@ -49,6 +49,7 @@ function start.f_selectScreen()
 			hoverCharacters[side][i] = 1
 		end
 	end
+	numberOfRows = 0
 	charsPerRow = {}
 	for i = 1, motif.select_info.rows do
 		local rowChars = 0
@@ -58,6 +59,9 @@ function start.f_selectScreen()
 				rowChars = rowChars + 1
 			end
 			charsPerRow[i] = rowChars
+		end
+		if rowChars > 0 then
+			numberOfRows = numberOfRows + 1
 		end
 	end
 	directions = {}
@@ -225,12 +229,12 @@ function start.f_selectScreen()
 				end
 				moved = false
 				if main.f_input(t_cmd, main.f_extractKeys('$U')) then
-					start.c[side].selY = (start.c[side].selY - 1) % motif.select_info.rows
+					start.c[side].selY = (start.c[side].selY - 1) % numberOfRows
 					start.c[side].selX = hoverCharacters[side][start.c[side].selY + 1] - 1
 					moved = true
 				end
 				if main.f_input(t_cmd, main.f_extractKeys('$D')) then
-					start.c[side].selY = (start.c[side].selY + 1) % motif.select_info.rows
+					start.c[side].selY = (start.c[side].selY + 1) % numberOfRows
 					start.c[side].selX = hoverCharacters[side][start.c[side].selY + 1] - 1
 					moved = true
 				end
@@ -258,7 +262,7 @@ function start.f_selectScreen()
 						motif.select_info['p' .. side .. '_fp_main_pos'][2] + (spacing[1][2] * n),
 						(motif.select_info['cell_' .. col .. '_' .. row .. '_facing'] or motif.select_info.cell_bg_facing)
 					)
-					local t = start.t_grid[((start.c[side].selY - n) % motif.select_info.rows) + 1][hoverCharacters[side][((start.c[side].selY - n) % motif.select_info.rows) + 1]]
+					local t = start.t_grid[((start.c[side].selY - n) % numberOfRows) + 1][hoverCharacters[side][((start.c[side].selY - n) % motif.select_info.rows) + 1]]
 					animSetScale(
 						start.f_getCharData(t.char_ref).cell_data or motif.select_info.cell_random_data,
 						(motif.select_info.portrait_scale[1] * (start.f_getCharData(t.char_ref).portrait_scale or 1) / (main.SP_Viewport43[3] / main.SP_Localcoord[1])) * 1,
@@ -272,18 +276,18 @@ function start.f_selectScreen()
 						(motif.select_info['cell_' .. col .. '_' .. row .. '_facing'] or motif.select_info.cell_bg_facing)
 					)
 					for h = 1, motif.select_info['p' .. side .. '_fp_up_' .. n .. '_right'] or 0 do
-						if charsPerRow[((start.c[side].selY - n) % motif.select_info.rows) + 1] > h then
+						if charsPerRow[((start.c[side].selY - n) % numberOfRows) + 1] > h then
 							main.f_animPosDraw(
 								motif.select_info.cell_bg_data,
 								motif.select_info['p' .. side .. '_fp_main_pos'][1] + (spacing[1][1] * n) + (spacing[4][1] * h),
 								motif.select_info['p' .. side .. '_fp_main_pos'][2] + (spacing[1][2] * n) + (spacing[4][2] * h),
 								(motif.select_info['cell_' .. col .. '_' .. row .. '_facing'] or motif.select_info.cell_bg_facing)
 							)
-							precalc = ((hoverCharacters[side][((start.c[side].selY - n) % motif.select_info.rows) + 1]) + h) % charsPerRow[((start.c[side].selY - n) % motif.select_info.rows) + 1]
+							precalc = ((hoverCharacters[side][((start.c[side].selY - n) % numberOfRows) + 1]) + h) % charsPerRow[((start.c[side].selY - n) % numberOfRows) + 1]
 							if precalc == 0 then
-								precalc = charsPerRow[((start.c[side].selY - n) % motif.select_info.rows) + 1]
+								precalc = charsPerRow[((start.c[side].selY - n) % numberOfRows) + 1]
 							end
-							local t = start.t_grid[((start.c[side].selY - n) % motif.select_info.rows) + 1][precalc]
+							local t = start.t_grid[((start.c[side].selY - n) % numberOfRows) + 1][precalc]
 							main.f_animPosDraw(
 								start.f_getCharData(t.char_ref).cell_data or motif.select_info.cell_random_data,
 								motif.select_info['p' .. side .. '_fp_main_pos'][1] + (spacing[1][1] * n) + (spacing[4][1] * h),
@@ -300,11 +304,11 @@ function start.f_selectScreen()
 								motif.select_info['p' .. side .. '_fp_main_pos'][2] + (spacing[1][2] * n) + (spacing[3][2] * h),
 								(motif.select_info['cell_' .. col .. '_' .. row .. '_facing'] or motif.select_info.cell_bg_facing)
 							)
-							precalc = ((hoverCharacters[side][((start.c[side].selY - n) % motif.select_info.rows) + 1]) - h) % charsPerRow[((start.c[side].selY - n) % motif.select_info.rows) + 1]
+							precalc = ((hoverCharacters[side][((start.c[side].selY - n) % numberOfRows) + 1]) - h) % charsPerRow[((start.c[side].selY - n) % numberOfRows) + 1]
 							if precalc == 0 then
-								precalc = charsPerRow[((start.c[side].selY - n) % motif.select_info.rows) + 1]
+								precalc = charsPerRow[((start.c[side].selY - n) % numberOfRows) + 1]
 							end
-							local t = start.t_grid[((start.c[side].selY - n) % motif.select_info.rows) + 1][precalc]
+							local t = start.t_grid[((start.c[side].selY - n) % numberOfRows) + 1][precalc]
 							main.f_animPosDraw(
 								start.f_getCharData(t.char_ref).cell_data or motif.select_info.cell_random_data,
 								motif.select_info['p' .. side .. '_fp_main_pos'][1] + (spacing[1][1] * n) + (spacing[3][1] * h),
@@ -321,7 +325,7 @@ function start.f_selectScreen()
 						motif.select_info['p' .. side .. '_fp_main_pos'][2] + (spacing[2][2] * n),
 						(motif.select_info['cell_' .. col .. '_' .. row .. '_facing'] or motif.select_info.cell_bg_facing)
 					)
-					local t = start.t_grid[((start.c[side].selY + n) % motif.select_info.rows) + 1][hoverCharacters[side][((start.c[side].selY + n) % motif.select_info.rows) + 1]]
+					local t = start.t_grid[((start.c[side].selY + n) % numberOfRows) + 1][hoverCharacters[side][((start.c[side].selY + n) % numberOfRows) + 1]]
 					animSetScale(
 						start.f_getCharData(t.char_ref).cell_data or motif.select_info.cell_random_data,
 						(motif.select_info.portrait_scale[1] * (start.f_getCharData(t.char_ref).portrait_scale or 1) / (main.SP_Viewport43[3] / main.SP_Localcoord[1])) * 1,
@@ -335,18 +339,18 @@ function start.f_selectScreen()
 						(motif.select_info['cell_' .. col .. '_' .. row .. '_facing'] or motif.select_info.cell_bg_facing)
 					)
 					for h = 1, motif.select_info['p' .. side .. '_fp_down_' .. n .. '_right'] or 0 do
-						if charsPerRow[((start.c[side].selY + n) % motif.select_info.rows) + 1] > h then
+						if charsPerRow[((start.c[side].selY + n) % numberOfRows) + 1] > h then
 							main.f_animPosDraw(
 								motif.select_info.cell_bg_data,
 								motif.select_info['p' .. side .. '_fp_main_pos'][1] + (spacing[2][1] * n) + (spacing[4][1] * h),
 								motif.select_info['p' .. side .. '_fp_main_pos'][2] + (spacing[2][2] * n) + (spacing[4][2] * h),
 								(motif.select_info['cell_' .. col .. '_' .. row .. '_facing'] or motif.select_info.cell_bg_facing)
 							)
-							precalc = ((hoverCharacters[side][((start.c[side].selY + n) % motif.select_info.rows) + 1]) + h) % charsPerRow[((start.c[side].selY + n) % motif.select_info.rows) + 1]
+							precalc = ((hoverCharacters[side][((start.c[side].selY + n) % numberOfRows) + 1]) + h) % charsPerRow[((start.c[side].selY + n) % numberOfRows) + 1]
 							if precalc == 0 then
-								precalc = charsPerRow[((start.c[side].selY + n) % motif.select_info.rows) + 1]
+								precalc = charsPerRow[((start.c[side].selY + n) % numberOfRows) + 1]
 							end
-							local t = start.t_grid[((start.c[side].selY + n) % motif.select_info.rows) + 1][precalc]
+							local t = start.t_grid[((start.c[side].selY + n) % numberOfRows) + 1][precalc]
 							main.f_animPosDraw(
 								start.f_getCharData(t.char_ref).cell_data or motif.select_info.cell_random_data,
 								motif.select_info['p' .. side .. '_fp_main_pos'][1] + (spacing[2][1] * n) + (spacing[4][1] * h),
@@ -356,20 +360,20 @@ function start.f_selectScreen()
 						end
 					end
 					for h = 1, motif.select_info['p' .. side .. '_fp_down_' .. n .. '_left'] or 0 do
-						if charsPerRow[((start.c[side].selY + n) % motif.select_info.rows) + 1] > h then
+						if charsPerRow[((start.c[side].selY + n) % numberOfRows) + 1] > h then
 							main.f_animPosDraw(
 								motif.select_info.cell_bg_data,
 								motif.select_info['p' .. side .. '_fp_main_pos'][1] + (spacing[2][1] * n) + (spacing[3][1] * h),
 								motif.select_info['p' .. side .. '_fp_main_pos'][2] + (spacing[2][2] * n) + (spacing[3][2] * h),
 								(motif.select_info['cell_' .. col .. '_' .. row .. '_facing'] or motif.select_info.cell_bg_facing)
 							)
-							precalc = ((hoverCharacters[side][((start.c[side].selY + n) % motif.select_info.rows) + 1]) - h) % charsPerRow[((start.c[side].selY + n) % motif.select_info.rows) + 1]
+							precalc = ((hoverCharacters[side][((start.c[side].selY + n) % numberOfRows) + 1]) - h) % charsPerRow[((start.c[side].selY + n) % numberOfRows) + 1]
 							if precalc == 0 then
-								precalc = charsPerRow[((start.c[side].selY + n) % motif.select_info.rows) + 1]
+								precalc = charsPerRow[((start.c[side].selY + n) % numberOfRows) + 1]
 							end
-							local t = start.t_grid[((start.c[side].selY + n) % motif.select_info.rows) + 1][precalc]
+							local t = start.t_grid[((start.c[side].selY + n) % numberOfRows) + 1][precalc]
 							main.f_animPosDraw(
-					start.f_getCharData(t.char_ref).cell_data or motif.select_info.cell_random_data,
+								start.f_getCharData(t.char_ref).cell_data or motif.select_info.cell_random_data,
 								motif.select_info['p' .. side .. '_fp_main_pos'][1] + (spacing[2][1] * n) + (spacing[3][1] * h),
 								motif.select_info['p' .. side .. '_fp_main_pos'][2] + (spacing[2][2] * n) + (spacing[3][2] * h),
 								(motif.select_info['cell_' .. col .. '_' .. row .. '_facing'] or motif.select_info.cell_bg_facing)
