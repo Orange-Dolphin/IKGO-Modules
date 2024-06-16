@@ -1173,3 +1173,42 @@ function launchFight(data)
 	start.p[2].teamMode = t.p2teammode
 	return ok
 end
+
+
+--save data between matches
+start.t_savedData = {}
+function start.f_saveData()
+	if main.debugLog then main.f_printTable(t_gameStats, 'debug/t_gameStats.txt') end
+	if winnerteam() == -1 then
+		return
+	end
+	--win/lose matches count, total score
+	if winnerteam() == 1 then
+		start.t_savedData.win[1] = start.t_savedData.win[1] + 1
+		start.t_savedData.lose[2] = start.t_savedData.lose[2] + 1
+		start.t_savedData.score.total[1] = t_gameStats.p1score
+	else --if winnerteam() == 2 then
+		start.t_savedData.win[2] = start.t_savedData.win[2] + 1
+		start.t_savedData.lose[1] = start.t_savedData.lose[1] + 1
+		if main.resetScore and matchno() ~= -1 then --loosing sets score for the next match to lose count
+			start.t_savedData.score.total[1] = start.t_savedData.lose[1]
+			start.t_savedData.debugflag[1] = false
+		else
+			start.t_savedData.score.total[1] = t_gameStats.p1score
+		end
+	end
+	start.t_savedData.score.total[2] = t_gameStats.p2score
+	--total time
+	start.t_savedData.time.total = start.t_savedData.time.total + t_gameStats.matchTime
+	--time in each round
+	table.insert(start.t_savedData.time.matches, t_gameStats.timerRounds)
+	--score in each round
+	table.insert(start.t_savedData.score.matches, t_gameStats.scoreRounds)
+	--max consecutive wins
+	for side = 1, 2 do
+		if getConsecutiveWins(side) > start.t_savedData.consecutive[side] then
+			start.t_savedData.consecutive[side] = getConsecutiveWins(side)
+		end
+	end
+	if main.debugLog then main.f_printTable(start.t_savedData, 'debug/t_savedData.txt') end
+end
