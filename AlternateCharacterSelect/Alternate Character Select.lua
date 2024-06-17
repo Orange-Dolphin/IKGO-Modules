@@ -728,6 +728,36 @@ function start.f_stageMenu()
 	end
 end
 
+
+--sets stage
+function start.f_setStage(num, assigned)
+	if main.stageMenu then
+		num = main.t_selectableStages[stageListNo]
+		if stageListNo == 0 then
+			num = main.t_selectableStages[math.random(1, #main.t_selectableStages)]
+			stageListNo = num -- comment out to randomize stage after each fight in survival mode, when random stage is chosen
+			stageRandom = true
+		else
+			num = main.t_selectableStages[stageListNo]
+		end
+		assigned = true
+	end
+	if not assigned then
+		if main.charparam.stage and start.f_getCharData(start.p[2].t_selected[1].ref).stage ~= nil then --stage assigned as character param
+			num = math.random(1, #start.f_getCharData(start.p[2].t_selected[1].ref).stage)
+			num = start.f_getCharData(start.p[2].t_selected[1].ref).stage[num]
+		elseif main.stageOrder and main.t_orderStages[start.f_getCharData(start.p[2].t_selected[1].ref).order] ~= nil then --stage assigned as stage order param
+			num = math.random(1, #main.t_orderStages[start.f_getCharData(start.p[2].t_selected[1].ref).order])
+			num = main.t_orderStages[start.f_getCharData(start.p[2].t_selected[1].ref).order][num]
+		else --stage randomly selected
+			num = main.t_includeStage[1][math.random(1, #main.t_includeStage[1])]
+		end
+	end
+	selectStage(num)
+	return num
+end
+
+
 function start.f_cellMovement(selX, selY, cmd, side, snd, dir)
 	local tmpX = selX
 	local tmpY = selY
